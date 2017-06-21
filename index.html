@@ -3,13 +3,19 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <title></title>
+    <title>Street Quest</title>
   </head>
   <body>
-    <script
-    src="http://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
+    <div id="map"></div>
+    <div id="hud">
+      <img id=hudimg>
+      <div id="hudtext"><p></p></div>
+      <div id="clues"></div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqRJtQQDNmVtfG8T69QwII-HtRcLuNHeg&libraries=geometry"></script>
     <script src="js/script.js" type="text/javascript"></script>
   </body>
 </html>
