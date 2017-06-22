@@ -3,11 +3,6 @@ var visibleclues = [];
 var map, marker, infobox, userLocation, directionDisplay, closestMarker, OnScreenMarkers = [];
 //Here are our initial 5 markers which we want to show on the screen
 //The only thing which our markers definitly need is a lat and a lng
-var sandwiches = [];
-// console.log(sandwiches);
-// sandwiches.push("apples");
-// sandwiches.push("pears");
-// console.log(sandwiches);
 var AllMarkers = [
 	{
 		lat: -41.294166,
@@ -108,75 +103,44 @@ var AllMarkers = [
 		image: "img/8bit-yaoming.png",
 		speech: "Hello little person, are you reaching for some kind of goal? If you're getting frustrated, have a laugh - because laughter is GOLD.",
 		clue: "GOLD"
-	},
+	}
 
 ];
 //In this function is where we call everything we want to run when the map loads on the screen
 function init(){
-
-	//All of the options for the map
 	var mapOptions = {
-		//Set where the Map starts
 		center:{
 			lat: -41.294049,
 			lng: 174.783364
 		},
-		//states what the initial zoom for the map is.
-		zoom: 17,
-		//Turn off all of the User Interface for the Map
-		disableDefaultUI: false,
-		//Turn off the ability to zoom with clicks
-		disableDoubleClickZoom: false,
-		//Turn off the ability to zoom with scroll wheel
-		scrollwheel: true,
-		//Turn off the ability to drag the map around
-		draggable: true,
-		//sets the cursor for when we are able to drag
+		zoom: 16,
+		disableDefaultUI: true,
 		draggableCursor: "hand",
-		//sets the cursor for when we are dragging
 		draggingCursor: "hand",
-		//set the background colour of the map
-		backgroundColor: "grey",
-		//sets where on the map we want the UI element to be
-		mapTypeControlOptions: {
-			position: google.maps.ControlPosition.TOP_CENTER
-		},
-		//This is the section where we can completly style the map
-		//Have a look at the Google Maps API Reference to see everything you can do
+		backgroundColor: "#64636C",
 		styles: [
 			{
-				//This is setting the overall style to the whole map
 				stylers:[
 					{ hue: "#A8CA8D" },
 					{ saturation: 0 }
 				]
 			},
 			{
-				//Just changing all the roads
-		        featureType: "road",
-		        elementType: "geometry",
-		        stylers: [
-		        	{ hue: "#A8CA8D" },
-		        	{ lightness: -10 },
-		          	{ visibility: "none" }
+				featureType: "road",
+		    elementType: "geometry",
+		    stylers: [
+		      { hue: "#A8CA8D" },
+		      { lightness: -10 },
+		      { visibility: "none" }
 		        ]
 			},
 			{
-				//Changing all the labels for transits
-				featureType: "transit",
-				elementType: "labels",
-				stylers: [
-				]
-			},
-			{
-				//Changing the water colour
 				featureType: "water",
 				stylers: [
 					{ color: "#A8CA8D"}
 				]
 			},
 			{
-				//Turning off all of the points of intereset
 				featureType: "poi",
 				stylers: [
 					{visibility: "off"}
@@ -184,29 +148,16 @@ function init(){
 			}
 		]
 	}
-	//Telling the map where you want to render it
-	map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	// // This function is for Geoloaction and figures out where the current user is
-		// // This function is adding all of our markers onto the page
+map = new google.maps.Map(document.getElementById("map"), mapOptions);
 	addAllMarkers();
-	// // This function is toggleing the bounce animation on a marker we place
-	// marker.addListener("click", toggleBounce);
-
-	// // This function is for adding the infoboxes to the screen
-  // console.log(OnScreenMarkers);
+	marker.addListener("click", toggleBounce());
 }
-
-//Calls when the window has loaded the run the init function which will show the map
 google.maps.event.addDomListener(window, 'load', init);
 
 
-
-//Placing all the markers on the map
 function addAllMarkers(){
-	//Loop over every marker in our array
 	for (var i = 0; i < AllMarkers.length; i++) {
-		//Create a new instance of google maps Marker
-		marker = new google.maps.Marker({
+			marker = new google.maps.Marker({
 			position:{
 				lat: AllMarkers[i].lat,
 				lng: AllMarkers[i].lng
@@ -220,31 +171,13 @@ function addAllMarkers(){
 			speech: AllMarkers[i].speech,
 			clue: AllMarkers[i].clue
 		})
-		//We are creating an array for all the markers that are actually on the screen
-		//Push each of those into that array
+
 		OnScreenMarkers.push(marker);
-		//Link an infobox to this specific marker
 		Allinfobox(marker);
 	};
 }
-//Adding only 1 marker onto the page
-function addSingleMaker(){
-	marker = new google.maps.Marker({
-		position:{
-			lat: -41.295005,
-			lng: 174.78362
-		},
-		map: map,
-		animation: google.maps.Animation.DROP,
-		icon: "images/icon.png",
-		title : "Yoobee School of Design",
-		description: "Description for Yoobee School of Design"
-	})
-}
-//Toggle on and of the bounce function
+
 function toggleBounce(){
-	//Check to see if there is already an animation linked onto that marker
-	//If there isnt then add Bounce and if there is then remove Bounce
 	if(marker.getAnimation() === null){
 		marker.setAnimation(google.maps.Animation.BOUNCE);
 	} else {
@@ -283,55 +216,43 @@ function Allinfobox(marker){
 	});
 }
 
-//Turning all of the markers on or off
-//In the HTML there is a button which has a click event for this function
-var toggleMarkerOn = true;
-function toggleMarkers(){
-	//Loop over all of the markers in the markers (the ones on the screen) array
-	for (var i = 0; i < markers.length; i++) {
-		//if the global variable is on then turn them all off
-		//and if not turn then all on
-		if(toggleMarkerOn === true){
-			markers[i].setMap(null);
-		} else {
-			markers[i].setMap(map);
+
+function showDirection(location, mode){
+		if(directionDisplay){
+		directionDisplay.setMap(null);
+	}
+	//Create a new instance of DirectionsService
+	var directionService = new google.maps.DirectionsService();
+	//Create a new instance of DirectionRendere
+	//This draws the lines on the map
+	//This was also initialised at the top of the page
+	directionDisplay = new google.maps.DirectionsRenderer();
+
+	//set what map you want it to show on
+	directionDisplay.setMap(map);
+
+	//The DirectionService only needs origin, destination and travelMode, but there are several other options you can add
+	directionService.route({
+		//What is the starting place (lat/lng)
+		origin: userLocation.position,
+		//What is the end place (lat/lng)
+		destination: {location},
+		//How is the user getting there
+		travelMode: google.maps.TravelMode[mode],
+	}, function(response, status){
+		//When it comes back from the server you will get a response and a status
+		//you should write a case for all of the different status
+		//Have a look at the Google Maps API for all of them
+
+		//If everything is all good
+		if(status == "OK"){
+			//Show the directions on the map
+			directionDisplay.setDirections(response);
+		} else if(status == "NOT_FOUND"){
+			//If one of the start or end locations werent found
+
+		} else if(status == "ZERO_RESULTS"){
+			//If there is no results of how to get to the locations
 		}
-	};
-	//Change the global varaible value for the next time the button is clicked
-	if(toggleMarkerOn === true){
-		toggleMarkerOn = false;
-	} else {
-		toggleMarkerOn = true;
-	}
-}
-
-//Find the current location for the user
-function FindUser(){
-	//navigator is an object in the browser which holds information
-	//what we are looking for is geolocation. Not all devices have geolocation so you only want this to work if it does have it
-	if(navigator.geolocation){
-		//Get the current position of the user
-		navigator.geolocation.getCurrentPosition(function(position){
-			//Create a new marker on the map at their current position and save that map to the userLocation variable
-			userLocation = new google.maps.Marker({
-				position:{
-					lat: position.coords.latitude,
-					lng: position.coords.longitude
-				},
-				map: map,
-				animation: google.maps.Animation.DROP,
-				icon: "images/icon.png"
-			});
-
-			//Move the map to focus on the current location of the user
-			map.panTo(userLocation.position);
-			//Find the closest marker to the user
-			FindClosestMarker();
-			//Show the directions to that marker that the user can walk to
-			showDirection(closestMarker.position, "WALKING");
-		})
-	} else{
-
-	}
-
+	});
 }
