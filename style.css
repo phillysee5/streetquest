@@ -3,7 +3,18 @@
     src: url('type/munro.ttf') format('truetype');
 }
 html {
-  font-family: "munro"
+  font-family: "munro";
+}
+
+h1 {
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin-left: 20px;
+  margin-top: 30px;
 }
 
 * {
@@ -18,7 +29,7 @@ html {
 }
 
 #hud {
-  height: 700px;
+  height: 820px;
   width: 250px;
   float: right;
   right: 50px;
@@ -34,6 +45,9 @@ html {
   margin-top: 30px;
   width: 210px;
   height: 200px;
+  border-top: solid #282925 3px;
+  border-left: solid #282925 2px;
+  background-color: #A8CA8D;
 }
 
 #hudtext {
@@ -51,8 +65,8 @@ html {
 
 #clues {
   width: 210px;
-  height: 200px;
-  background-color: #5E5C6C;
+  height: 260px;
+  background-color: #64636C;
   border-radius: 10px;
   box-shadow: 0px 10px 5px #3E4850;
   margin-left: 20px;
@@ -60,9 +74,56 @@ html {
 }
 
 #theclues {
-  color: darkgrey;
+  color: #262629;
   list-style: none;
-  font-size: 2em;
-  margin-left: 30px;
+  font-size: 1.4em;
+  margin-left: 20px;
+  margin-right: 20px;
   margin-top: 10px;
+}
+
+li {
+  display: flex;
+  float: left;
+  margin: 5px;
+  background-color: #898894;
+  border-radius: 7px;
+  padding: 3px;
+}
+
+#controls {
+  height: 170px;
+  width: 150px;
+  float: left;
+  left: 50px;
+  bottom: 50px;
+  position: absolute;
+  background-color: #61707D;
+  border-radius: 10px;
+  box-shadow: 0px 10px 5px #3E4850;
+  z-index: 20;
+}
+
+label {
+  position: absolute;
+  font-size: 1.5em;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+select {
+  position: absolute;
+  margin-left: 20px;
+  font-family: "munro";
+  font-size: 1.5em;
+  margin-top: 60px;
+}
+
+button {
+  font-family: "munro";
+  font-size: 1.5em;
+  margin-top: 90px;
+  margin-left: 12px;
+  background-color: #FFE381;
+  padding: 3px;
 }

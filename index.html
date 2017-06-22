@@ -7,13 +7,26 @@
   </head>
   <body>
     <div id="map"></div>
+    <div id="controls">
+      <label for="travelmode">Travel Mode</label>
+      <select class="" name="travelmode">
+        <option value="">Walking</option>
+        <option value="">Driving</option>
+        <option value="">Bicycle</option>
+        <option value="">Transit</option>
+      </select><br>
+      <button type="button" name="button" onclick="">SOLVE PUZZLE</button>
+
+    </div>
     <div id="hud">
+      <h1>STREET QUEST</h1>
       <img id=hudimg>
       <div><p id="hudtext"></p></div>
-      <div id="clues"><ul id="theclues">
+      <div id="clues"><h3>CLUES</h3><ul id="theclues">
 
       </ul></div>
     </div>
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

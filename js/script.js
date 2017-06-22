@@ -1,3 +1,4 @@
+var visibleclues = [];
 //Declare all of our Global variables for the project
 var map, marker, infobox, userLocation, directionDisplay, closestMarker, OnScreenMarkers = [];
 //Here are our initial 5 markers which we want to show on the screen
@@ -15,8 +16,8 @@ var AllMarkers = [
 		description: "This guy is wearing shades, he seems pretty cool",
     icon: "img/8bit-coolguy-icon.png",
     image: "img/8bit-coolguy.jpg",
-		speech: "Hey there dude, let me tell you a thing or two. When the chips are down, you've got to keep your cool. My clue for you is = ICE",
-		clue: "ICE"
+		speech: "Hey there dude, let me tell you a thing or two. When the chips are down, you've got to keep your COOL.",
+		clue: "COOL"
 	},
   {
 		lat: -41.293132,
@@ -25,8 +26,8 @@ var AllMarkers = [
 		description: "You are inexorably drawn to this man's luxurious beard",
     icon: "img/8bit-beardedman-icon.png",
     image: "img/8bit-beardedman.jpg",
-		speech: "",
-		clue: ""
+		speech: "Ho there stranger, let me tell you a tale. If your beard is both COARSE and thick then you will never fail.",
+		clue: "COARSE"
 	},
   {
 		lat: -41.293755,
@@ -34,7 +35,9 @@ var AllMarkers = [
 		title: "Black Mage",
 		description: "You get the tingles just looking at this mysterious fellow",
     icon: "img/8bit-blackmage-icon.png",
-    image: "img/8bit-blackmage.jpg"
+    image: "img/8bit-blackmage.jpg",
+		speech: "When the sun is bright, life is like a flower. But in the darkest hour - remember your POWER.",
+		clue: "POWER"
 	},
   {
 		lat: -41.293100,
@@ -42,7 +45,9 @@ var AllMarkers = [
 		title: "Einstein",
 		description: "This strange man looks completely out of time and place",
     icon: "img/8bit-einstein-icon.png",
-    image: "img/8bit-einstein.jpg"
+    image: "img/8bit-einstein.jpg",
+		speech: "Do you have the TIME by chance? I can never seem to keep track of it - to me it's all relative.",
+		clue: "TIME"
 	},
   {
 		lat: -41.292612,
@@ -50,8 +55,60 @@ var AllMarkers = [
 		title: "One Eyed Bandit",
 		description: "This rugged woman gives you a piercing one-eyed glance",
     icon: "img/8bit-eyepatch-icon.png",
-    image: "img/8bit-eyepatch.png"
-	}
+    image: "img/8bit-eyepatch.png",
+		speech: "If it's a fight you want, it's a FIGHT you'll get. The day's not been done till the bloods been let.",
+		clue: "FIGHT"
+	},
+	{
+		lat: -41.292519,
+		lng: 174.778701,
+		title: "Kirby",
+		description: "A pink fuzzball gives you a cheerful smile",
+		icon: "img/8bit-kirby-icon.png",
+		image: "img/8bit-kirby.jpg",
+		speech: "I weigh almost nothing. If you want to FLY dear traveller, you'll have to take yourself lightly.",
+		clue: "FLY"
+	},
+	{
+		lat: -41.291459,
+		lng: 174.777692,
+		title: "Old Man",
+		description: "There's a mad sparkle in his eye",
+		icon: "img/8bit-oldman-icon.png",
+		image: "img/8bit-oldman.png",
+		speech: "The years they pass, chopped down like grass. I gave all of my teeth for a GLASS and half. Ho ho he he.",
+		clue: "GLASS"
+	},
+	{
+		lat: -41.291421,
+		lng: 174.776820,
+		title: "Pikachu",
+		description: "You feel a crackling in the air",
+		icon: "img/8bit-pikachu-icon.png",
+		image: "img/8bit-pikachu.png",
+		speech: "Pika pika pikachu. You know I can say more than my NAME, but I get more of what I want by playing this game.",
+		clue: "NAME"
+	},
+	{
+		lat: -41.290532,
+		lng: 174.777194,
+		title: "Sonic",
+		description: "He seems restless",
+		icon: "img/8bit-sonic-icon.png",
+		image: "img/8bit-sonic.jpg",
+		speech: "I've got a real need for speed, even when there's no real need. If you want to go fast like me - take care of your FEET.",
+		clue: "FEET"
+	},
+	{
+		lat: -41.290538,
+		lng: 174.775826,
+		title: "Yao Ming",
+		description: "This large man seems amused",
+		icon: "img/8bit-yaoming-icon.png",
+		image: "img/8bit-yaoming.png",
+		speech: "Hello little person, are you reaching for some kind of goal? If you're getting frustrated, have a laugh - because laughter is GOLD.",
+		clue: "GOLD"
+	},
 
 ];
 //In this function is where we call everything we want to run when the map loads on the screen
@@ -75,15 +132,11 @@ function init(){
 		//Turn off the ability to drag the map around
 		draggable: true,
 		//sets the cursor for when we are able to drag
-		draggableCursor: "pointer",
+		draggableCursor: "hand",
 		//sets the cursor for when we are dragging
-		draggingCursor: "crosshair",
-		//turn on the ability to make the map full screen
-		fullscreenControl: true,
+		draggingCursor: "hand",
 		//set the background colour of the map
 		backgroundColor: "grey",
-		//turns off the ability to use keyboard
-		keyboardShortcuts: false,
 		//sets where on the map we want the UI element to be
 		mapTypeControlOptions: {
 			position: google.maps.ControlPosition.TOP_CENTER
@@ -94,8 +147,8 @@ function init(){
 			{
 				//This is setting the overall style to the whole map
 				stylers:[
-					{ hue: "#d01439" },
-					{ saturation: -20 }
+					{ hue: "#A8CA8D" },
+					{ saturation: 0 }
 				]
 			},
 			{
@@ -103,7 +156,7 @@ function init(){
 		        featureType: "road",
 		        elementType: "geometry",
 		        stylers: [
-		        	{ hue: "#0B5563" },
+		        	{ hue: "#A8CA8D" },
 		        	{ lightness: -10 },
 		          	{ visibility: "none" }
 		        ]
@@ -119,7 +172,7 @@ function init(){
 				//Changing the water colour
 				featureType: "water",
 				stylers: [
-					{ color: "#72DDF7"}
+					{ color: "#A8CA8D"}
 				]
 			},
 			{
@@ -140,7 +193,7 @@ function init(){
 	// marker.addListener("click", toggleBounce);
 
 	// // This function is for adding the infoboxes to the screen
-  console.log(OnScreenMarkers);
+  // console.log(OnScreenMarkers);
 }
 
 //Calls when the window has loaded the run the init function which will show the map
@@ -209,16 +262,23 @@ function Allinfobox(marker){
 	}
 	infobox = new google.maps.InfoWindow();
 	google.maps.event.addListener(marker, "click", function(){
-		infobox.setContent("<div><strong>"+marker.title+"</strong></div><hr>"+
-							"<div>"+marker.description+"</div>"
+		infobox.setContent("<div><strong>"+marker.title+"</strong></div><hr>"
+
 			);
     var hudimg = document.getElementById("hudimg");
 		var charspeech = document.getElementById("hudtext");
 		var clue = marker.clue;
 		hudimg.src = marker.image;
 		charspeech.innerText = marker.speech;
-		$("#theclues").append("<li>"+clue+"</li>");
 
+		if($.inArray(clue, visibleclues) == -1){
+		$("#theclues").append("<li>"+clue+"</li>");
+		visibleclues.push(clue)
+		}
+		// if(visibleclues.length > 4){
+		// 	append
+		console.log(visibleclues);
+		// }
 		infobox.open(map, marker);
 	});
 }
