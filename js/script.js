@@ -14,7 +14,9 @@ var AllMarkers = [
 		title: "Cool Guy",
 		description: "This guy is wearing shades, he seems pretty cool",
     icon: "img/8bit-coolguy-icon.png",
-    image: "img/8bit-coolguy.jpg"
+    image: "img/8bit-coolguy.jpg",
+		speech: "Hey there dude, let me tell you a thing or two. When the chips are down, you've got to keep your cool. My clue for you is = ICE",
+		clue: "ICE"
 	},
   {
 		lat: -41.293132,
@@ -22,7 +24,9 @@ var AllMarkers = [
 		title: "Bearded Man",
 		description: "You are inexorably drawn to this man's luxurious beard",
     icon: "img/8bit-beardedman-icon.png",
-    image: "img/8bit-beardedman.jpg"
+    image: "img/8bit-beardedman.jpg",
+		speech: "",
+		clue: ""
 	},
   {
 		lat: -41.293755,
@@ -136,8 +140,6 @@ function init(){
 	// marker.addListener("click", toggleBounce);
 
 	// // This function is for adding the infoboxes to the screen
-
-  console.log(AllMarkers);
   console.log(OnScreenMarkers);
 }
 
@@ -161,7 +163,9 @@ function addAllMarkers(){
 			title: AllMarkers[i].title,
 			description: AllMarkers[i].description,
       icon: AllMarkers[i].icon,
-      image: AllMarkers[i].image
+      image: AllMarkers[i].image,
+			speech: AllMarkers[i].speech,
+			clue: AllMarkers[i].clue
 		})
 		//We are creating an array for all the markers that are actually on the screen
 		//Push each of those into that array
@@ -209,9 +213,12 @@ function Allinfobox(marker){
 							"<div>"+marker.description+"</div>"
 			);
     var hudimg = document.getElementById("hudimg");
-    console.log(marker)
-    // hud.innerHTML = 'src="'+marker.image+'"'
-    hudimg.src = marker.image;
+		var charspeech = document.getElementById("hudtext");
+		var clue = marker.clue;
+		hudimg.src = marker.image;
+		charspeech.innerText = marker.speech;
+		$("#theclues").append("<li>"+clue+"</li>");
+
 		infobox.open(map, marker);
 	});
 }
